@@ -1,5 +1,5 @@
 LIMITE_SAQUE = 3
-VALOR_MA_SAQUE = 500
+VALOR_MAX_SAQUE = 500
 AGENCIA = "0001"
 def menu():
   menu = """\n
@@ -19,7 +19,7 @@ def menu():
 def main():
   """Função principal do sistema"""
   saldo = 0
-  numeros_saques = 0
+  numero_saques = 0
   extrato = ""
   usuarios = []
   contas = []
@@ -31,10 +31,24 @@ def main():
       case "1":
         valor = float(input("Digite o valor do deposito: "))
         saldo,extrato = deposito(saldo,valor,extrato)
+      
+      case "2":
+        valor = float(input("Informe o valor do saque: "))
+        saldo, extrato = saque(
+          saldo = saldo,
+          valor=valor,
+          extrato=extrato,
+          numero_saques=numero_saques,
+          limite_saques=LIMITE_SAQUE,
+          limite_valor = VALOR_MAX_SAQUE
+
+        )
       case "3":
         exibir_extrato(saldo, extrato=extrato)
+
       case "4":
         usuarios = criar_usuario(usuarios)
+
       case "5":
         contas = criar_conta(usuarios,contas, AGENCIA)
 
@@ -43,6 +57,7 @@ def main():
 
       case "7":
         listar_usuarios(usuarios)
+
       case "0":
         print("\nObrigado por utilizar o nossos serviços volte sempre!!")
         break
@@ -126,7 +141,26 @@ def  listar_usuarios(usuarios):
       Endereço:\t{usuario['endereco']}
     """
     print(linha)
-  
+def saque(*, saldo, extrato, valor, numero_saques, limite_saques=LIMITE_SAQUE, limite_valor=VALOR_MAX_SAQUE):
+  if numero_saques >= limite_saques:
+    print("ERRO: Número máximo de saques excedido.")
+    return
+  if valor > limite_valor:
+    print("ERRO: O valor do saque excede o limite.")
+    return
+  if valor > saldo:
+    print("ERRO: Saldo insuficiente.")
+    return
+
+  if valor <= 0:
+    print("ERRO: Valor inválido.")
+    return
+
+  saldo -= valor
+  extrato += f"Saque: R$ {valor:.2f}\n"
+  print(f"Saque de R$ {valor:.2f} realizado com sucesso!")
+  return saldo, extrato
+
 
 if __name__ == "__main__":
   main()
