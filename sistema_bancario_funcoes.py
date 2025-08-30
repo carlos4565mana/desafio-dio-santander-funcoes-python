@@ -131,7 +131,7 @@ def  listar_usuarios(usuarios):
   """Lista todos os usuários cadastrados"""
   if not usuarios:
     print("\n⚠️ Nenhum usuário cadastrado.")
-    return
+    return 
   print("\n========== USUÁRIOS CADASTRADOS ==========")
   for usuario in usuarios:
     linha = f"""\
@@ -144,17 +144,17 @@ def  listar_usuarios(usuarios):
 def saque(*, saldo, extrato, valor, numero_saques, limite_saques=LIMITE_SAQUE, limite_valor=VALOR_MAX_SAQUE):
   if numero_saques >= limite_saques:
     print("ERRO: Número máximo de saques excedido.")
-    return
+    return saldo, extrato
   if valor > limite_valor:
     print("ERRO: O valor do saque excede o limite.")
-    return
+    return  saldo, extrato
   if valor > saldo:
     print("ERRO: Saldo insuficiente.")
-    return
+    return saldo, extrato
 
   if valor <= 0:
     print("ERRO: Valor inválido.")
-    return
+    return saldo, extrato
 
   saldo -= valor
   extrato += f"Saque: R$ {valor:.2f}\n"

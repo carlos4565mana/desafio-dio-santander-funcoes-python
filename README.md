@@ -45,10 +45,10 @@ Refatorar o sistema bancário original aplicando conceitos de **programação fu
 
 ```python
 usuario = {
-    "nome": "João Silva",
+    "nome": "Jose Silva",
     "data_nascimento": "15/03/1990", 
-    "cpf": "12345678901",
-    "endereco": "Rua das Flores, 123 - Centro - Salvador/BA"
+    "cpf": "1234567890",
+    "endereco": "Rua A - Centro - Salvador/BA"
 }
 ```
 
