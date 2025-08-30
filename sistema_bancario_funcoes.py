@@ -31,10 +31,18 @@ def main():
       case "1":
         valor = float(input("Digite o valor do deposito: "))
         saldo,extrato = deposito(saldo,valor,extrato)
+      case "3":
+        exibir_extrato(saldo, extrato=extrato)
       case "4":
         usuarios = criar_usuario(usuarios)
       case "5":
         contas = criar_conta(usuarios,contas, AGENCIA)
+
+      case "6":
+        listar_contas(contas)
+
+      case "7":
+        listar_usuarios(usuarios)
       case "0":
         print("\nObrigado por utilizar o nossos serviços volte sempre!!")
         break
@@ -76,9 +84,49 @@ def criar_conta(usuarios,contas,AGENCIA):
     print("\n⚠️ Usuário não encontrado! Cadastre o usuário primeiro.")
   return contas
 
+def deposito(saldo, valor, extrato, /):
+  if valor <= 0:
+    print("ERRO: Valor inválido.")
+    return saldo, extrato
+  saldo += valor
+  extrato += f"Depósito: R$ {valor:.2f}\n"
+  print(f"Depósito de R$ {valor:.2f} realizado com sucesso!")
+  return saldo, extrato
 
+def exibir_extrato(saldo, /, *, extrato):
+  print(f"\n-------- 📃 EXTRATO --------")
+  print(f"{extrato or 'Nenhuma movimentação na conta.'}")
+  print(f"Saldo da conta: R$ {saldo:.2f}\n")
 
-    
+def listar_contas(contas)    :
+   """Lista todas as contas cadastradas"""
+   if not contas:
+    print("\n⚠️ Nenhuma conta cadastrada.")
+    return
+   print("\n========== CONTAS CADASTRADAS ==========")
+   for conta in contas:
+    linha = f"""\
+      Agência:\t{conta['agencia']}
+      C/C:\t{conta['numero_conta']}
+      Titular:\t{conta['usuario']['nome']}
+      """
+    print(linha)
+
+def  listar_usuarios(usuarios):
+  """Lista todos os usuários cadastrados"""
+  if not usuarios:
+    print("\n⚠️ Nenhum usuário cadastrado.")
+    return
+  print("\n========== USUÁRIOS CADASTRADOS ==========")
+  for usuario in usuarios:
+    linha = f"""\
+      Nome:\t\t{usuario['nome']}
+      CPF:\t\t{usuario['cpf']}
+      Data Nasc.:\t{usuario['data_nascimento']}
+      Endereço:\t{usuario['endereco']}
+    """
+    print(linha)
+  
 
 if __name__ == "__main__":
   main()
