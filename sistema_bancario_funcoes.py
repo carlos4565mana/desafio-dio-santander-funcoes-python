@@ -33,7 +33,8 @@ def main():
         saldo,extrato = deposito(saldo,valor,extrato)
       case "4":
         usuarios = criar_usuario(usuarios)
-
+      case "5":
+        contas = criar_conta(usuarios,contas, AGENCIA)
       case "0":
         print("\nObrigado por utilizar o nossos serviços volte sempre!!")
         break
@@ -58,6 +59,24 @@ def criar_usuario(usuarios):
 def filtrar_usuario(cpf, usuarios):
   usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
   return usuarios_filtrados[0] if usuarios_filtrados else None
+
+def criar_conta(usuarios,contas,AGENCIA):
+  """Cria uma nova conta bancária"""
+  cpf = input("Digite o CPF")
+  usuario_filtrado = filtrar_usuario(cpf, usuarios)
+  if usuario_filtrado:
+    numero_conta = len(contas) + 1
+    conta = {"agencia": AGENCIA, "numero_conta": numero_conta, "usuario": usuario_filtrado }
+    contas.append(conta)
+    print(f"✅ Conta criada com sucesso!")
+    print(f"Agência: {AGENCIA}")
+    print(f"Conta: {numero_conta}")
+    print(f"Titular: {usuario_filtrado['nome']}")
+  else:
+    print("\n⚠️ Usuário não encontrado! Cadastre o usuário primeiro.")
+  return contas
+
+
 
     
 
